@@ -25,6 +25,11 @@ func _property_get_revert(property : StringName) -> Variant:
 	
 	return super(property)
 
+func _process(delta: float) -> void:
+	super(delta)
+	if not _should_process():
+		return
+
 func sort_graphic(data_index : int) -> void:
 	var graphic : RubiconLevelNote = graphics[data_index]
 	
@@ -50,8 +55,8 @@ func sort_graphic(data_index : int) -> void:
 	
 	move_child(graphic, target_index)
 
-func get_mode_id() -> String:
+func get_mode_id() -> StringName:
 	return "mania"
 
-func get_unique_id() -> String:
+func get_unique_id() -> StringName:
 	return "mania_lane%s" % lane_id 
