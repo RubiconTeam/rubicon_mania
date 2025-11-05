@@ -1,3 +1,4 @@
+@tool
 class_name RubiconLevelManiaNoteHandler extends RubiconLevelNoteHandler
 
 enum LaneState {
@@ -6,15 +7,51 @@ enum LaneState {
 	LANE_STATE_HIT = 2
 }
 
+@export var global_direction : float = 0.0
+
 @export_group("Lane", "lane_")
 @export var lane_id : int = 0
 @export var lane_state : LaneState = LaneState.LANE_STATE_NEUTRAL
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+## The currently held note, if any.
+var held_note : RubiChartNote = null 
 
+func _init() -> void:
+	settings = load("res://addons/rubicon_mania/resources/default_settings.tres")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _property_get_revert(property : StringName) -> Variant:
+	if property == "settings" and ResourceLoader.exists("res://addons/rubicon_mania/resources/default_settings.tres"):
+		return load("res://addons/rubicon_mania/resources/default_settings.tres")
+	
+	return super(property)
+
+func sort_graphic(data_index : int) -> void:
+	var graphic : RubiconLevelNote = graphics[data_index]
+	
+	# Easy sorting
+	if data_index > 0 and graphics[data_index - 1] != null: # Get the note behind
+		move_child(graphic, graphics[data_index - 1].get_index() + 1)
+		return
+	
+	if graphics[data_index + 1] != null: # Get the note in front
+		move_child(graphic, graphics[data_index + 1].get_index())
+		return
+	
+	var target_index : int = -1
+	for i in graphics.size():
+		var current : RubiconLevelNote = graphics[i]
+		if current != null:
+			if i < data_index:
+				target_index = current.get_index() + 1
+			else:
+				target_index = current.get_index()
+			
+			break
+	
+	move_child(graphic, target_index)
+
+func get_mode_id() -> String:
+	return "mania"
+
+func get_unique_id() -> String:
+	return "mania_lane%s" % lane_id 

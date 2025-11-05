@@ -1,0 +1,55 @@
+@tool
+class_name RubiconLevelManiaNote extends RubiconLevelNote
+
+@export var lane_id : int = 0
+@export var local_direction : float = 0.0
+
+@export_group("Offset", "offset_")
+@export var offset_position : Vector2
+@export var offset_rotation : float
+@export var offset_scale : Vector2 = Vector2.ONE
+
+@export_group("References", "reference_")
+@export var reference_trail : Control
+@export var reference_trail_mask : Control
+
+func get_mania_handler() -> RubiconLevelManiaNoteHandler:
+	return _handler
+
+func initialize(handler : RubiconLevelNoteHandler, data_index : int) -> void:
+	super(handler, data_index)
+	
+	lane_id = get_mania_handler().lane_id
+	
+	var final_rotation : float = get_mania_handler().global_direction + local_direction
+	position = Vector2(cos(final_rotation), sin(final_rotation)) * 5000.0
+	
+	var trail_size : Vector2 = reference_trail_mask.size
+	trail_size.x = handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position()
+	reference_trail_mask.size = trail_size
+
+func is_held() -> bool:
+	return handler != null and get_mania_handler().held_note == self
+
+func _process(delta: float) -> void:
+	if not _should_process():
+		return
+	
+	var final_rotation : float = get_mania_handler().global_direction + local_direction
+	reference_trail_mask.rotation = final_rotation
+	
+	var current_time : float = handler.get_controller().get_level_clock().time_milliseconds
+	var current_start_position : float = handler.data[data_index].get_graphical_start_position_relative(current_time)
+	
+	# Positioning
+	var rotation_vector : Vector2 = Vector2(cos(final_rotation), sin(final_rotation))
+	position = (rotation_vector * current_start_position) + (rotation_vector * offset_position)
+	
+	# Trail
+	#var trail_size : Vector2 = reference_trail_mask.size
+	#trail_size.x = handler.data[data_index].get_graphical_end_position_relative(current_time) - current_start_position
+	#reference_trail_mask.size = trail_size
+	#
+	#var trail_position : Vector2 = reference_trail_mask.position
+	#trail_position.x = reference_trail.size.x - trail_size.x
+	#reference_trail_mask.position = trail_position

@@ -972,7 +972,7 @@ states/right/position = Vector2(376.15625, 311.5)
 states/up/node = SubResource("AnimationNodeStateMachine_sprb2")
 states/up/position = Vector2(463.8828, 207.5)
 transitions = ["Start", "RESET", SubResource("AnimationNodeStateMachineTransition_yxc8l"), "RESET", "left", SubResource("AnimationNodeStateMachineTransition_yrnou"), "RESET", "down", SubResource("AnimationNodeStateMachineTransition_2vnxt"), "RESET", "up", SubResource("AnimationNodeStateMachineTransition_fog6o"), "RESET", "right", SubResource("AnimationNodeStateMachineTransition_tvk2b"), "left", "RESET", SubResource("AnimationNodeStateMachineTransition_1gtrt"), "down", "RESET", SubResource("AnimationNodeStateMachineTransition_7oy66"), "up", "RESET", SubResource("AnimationNodeStateMachineTransition_hf36s"), "right", "RESET", SubResource("AnimationNodeStateMachineTransition_1gcdg")]
-graph_offset = Vector2(0, -131.17252)
+graph_offset = Vector2(0, -12.712573)
 
 [node name="Lane" type="Control"]
 layout_mode = 3
@@ -984,13 +984,11 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o0sw0")
-lane_id = 2
-lane_state = 2
 metadata/_custom_type_script = "uid://cl5ub8354p83i"
 
 [node name="Outline" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_6gtoi")
-animation = &"ArrowDef_Up_Outline"
+animation = &"ArrowDef_Left_Outline"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Outline"]
 libraries = {
@@ -999,8 +997,8 @@ libraries = {
 
 [node name="Fill" type="AnimatedSprite2D" parent="Outline"]
 sprite_frames = ExtResource("1_6gtoi")
-animation = &"ArrowFill_Up"
-offset = Vector2(-1, -5.5)
+animation = &"ArrowFill_Left"
+offset = Vector2(0, -5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Outline/Fill"]
 libraries = {
@@ -1010,9 +1008,8 @@ libraries = {
 [node name="Hit" type="AnimatedSprite2D" parent="."]
 visible = false
 sprite_frames = ExtResource("1_6gtoi")
-animation = &"ArrowHit_Up"
+animation = &"ArrowHit_Left"
 frame = 3
-offset = Vector2(2, 5.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hit"]
 libraries = {
@@ -1020,11 +1017,13 @@ libraries = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
 libraries = {
 &"": SubResource("AnimationLibrary_o0sw0")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+reset_on_save = false
 tree_root = SubResource("AnimationNodeStateMachine_o0sw0")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
