@@ -24,12 +24,16 @@ func initialize(handler : RubiconLevelNoteHandler, data_index : int) -> void:
 	var final_rotation : float = get_mania_handler().global_direction + local_direction
 	position = Vector2(cos(final_rotation), sin(final_rotation)) * 5000.0
 	
-	var trail_size : Vector2 = reference_trail_mask.size
-	trail_size.x = handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position()
-	reference_trail_mask.size = trail_size
+	reference_trail_mask.offset_left = 0.0
+	reference_trail_mask.pivot_offset.x = -reference_trail_mask.offset_left
+	
+	reference_trail_mask.offset_right = floor(handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position())
 
 func is_held() -> bool:
-	return handler != null and get_mania_handler().held_note == self
+	if handler == null:
+		return false
+	
+	return get_mania_handler().held_note == data_index
 
 func _process(delta: float) -> void:
 	if not _should_process():
@@ -45,6 +49,12 @@ func _process(delta: float) -> void:
 	var rotation_vector : Vector2 = Vector2(cos(final_rotation), sin(final_rotation))
 	position = (rotation_vector * current_start_position) + (rotation_vector * offset_position)
 	
+	if was_hit():
+		reference_trail_mask.offset_left = floor(reference_trail_mask.offset_right - handler.data[data_index].get_graphical_end_position_relative(current_time))
+		reference_trail_mask.pivot_offset.x = -reference_trail_mask.offset_left
+	else:
+		reference_trail_mask.offset_left = 0.0
+		reference_trail_mask.pivot_offset.x = -reference_trail_mask.offset_left
 	# Trail
 	#var trail_size : Vector2 = reference_trail_mask.size
 	#trail_size.x = handler.data[data_index].get_graphical_end_position_relative(current_time) - current_start_position

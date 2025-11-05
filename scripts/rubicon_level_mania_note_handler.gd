@@ -14,7 +14,7 @@ enum LaneState {
 @export var lane_state : LaneState = LaneState.LANE_STATE_NEUTRAL
 
 ## The currently held note, if any.
-var held_note : RubiChartNote = null 
+var held_note : int = -1
 
 func _init() -> void:
 	settings = load("res://addons/rubicon_mania/resources/default_settings.tres")

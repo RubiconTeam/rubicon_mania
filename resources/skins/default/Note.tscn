@@ -308,11 +308,11 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uxgrj"]
 advance_mode = 2
-advance_expression = "held"
+advance_expression = "was_hit() or is_held()"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jvf40"]
 advance_mode = 2
-advance_expression = "not held"
+advance_expression = "not was_hit() and not is_held()"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_5p607"]
 states/held/node = SubResource("AnimationNodeAnimation_3icon")
@@ -480,6 +480,7 @@ libraries = {
 [node name="HeldTree" type="AnimationTree" parent="."]
 root_node = NodePath(".")
 tree_root = SubResource("AnimationNodeStateMachine_5p607")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("HeldPlayer")
 
 [node name="HeldPlayer" type="AnimationPlayer" parent="HeldTree"]
