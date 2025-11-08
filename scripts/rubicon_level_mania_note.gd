@@ -29,12 +29,6 @@ func initialize(handler : RubiconLevelNoteHandler, data_index : int) -> void:
 	
 	reference_trail_mask.offset_right = floor(handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position())
 
-func is_held() -> bool:
-	if handler == null:
-		return false
-	
-	return get_mania_handler().held_note == data_index
-
 func _process(delta: float) -> void:
 	if not _should_process():
 		return

@@ -60,3 +60,21 @@ func get_mode_id() -> StringName:
 
 func get_unique_id() -> StringName:
 	return "mania_lane%s" % lane_id 
+
+func _autoplay_process(millisecond_position : float) -> void:
+	while data[note_hit_index].get_millisecond_start_position() - millisecond_position <= 0:
+		# Hold note logic
+		if data[note_hit_index].ending_row != null:
+			if results[note_hit_index] == null or results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_NONE:
+				hit_note(note_hit_index, data[note_hit_index].get_millisecond_start_position(), RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE)
+
+			var should_complete : bool = data[note_hit_index].get_millisecond_end_position() - millisecond_position <= 0
+			if should_complete:
+				print("COMPLETE")
+				hit_note(note_hit_index, data[note_hit_index].get_millisecond_end_position(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
+				note_hit_index += 1
+			
+			break
+
+		hit_note(note_hit_index,data[note_hit_index].get_millisecond_end_position(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
+		note_hit_index += 1

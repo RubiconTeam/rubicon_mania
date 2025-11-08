@@ -223,11 +223,11 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f08hf"]
 advance_mode = 2
-advance_expression = "missed"
+advance_expression = "was_missed()"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lqarh"]
 advance_mode = 2
-advance_expression = "not missed"
+advance_expression = "was_missed()"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jvf40"]
 states/missed/node = SubResource("AnimationNodeAnimation_5j3vy")
@@ -308,11 +308,11 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uxgrj"]
 advance_mode = 2
-advance_expression = "was_hit() or is_held()"
+advance_expression = "was_hit()"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jvf40"]
 advance_mode = 2
-advance_expression = "not was_hit() and not is_held()"
+advance_expression = "not was_hit()"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_5p607"]
 states/held/node = SubResource("AnimationNodeAnimation_3icon")
