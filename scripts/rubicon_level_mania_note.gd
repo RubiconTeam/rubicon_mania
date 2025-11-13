@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	var rotation_vector : Vector2 = Vector2(cos(final_rotation), sin(final_rotation))
 	position = (rotation_vector * current_start_position) + (rotation_vector * offset_position)
 	
-	if was_hit():
+	if was_hit() and not was_missed():
 		reference_trail_mask.offset_left = floor(reference_trail_mask.offset_right - handler.data[data_index].get_graphical_end_position_relative(current_time))
 		reference_trail_mask.pivot_offset.x = -reference_trail_mask.offset_left
 	else:

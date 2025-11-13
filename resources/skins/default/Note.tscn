@@ -227,7 +227,7 @@ advance_expression = "was_missed()"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lqarh"]
 advance_mode = 2
-advance_expression = "was_missed()"
+advance_expression = "not was_missed()"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jvf40"]
 states/missed/node = SubResource("AnimationNodeAnimation_5j3vy")

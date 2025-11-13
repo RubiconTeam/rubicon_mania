@@ -1,8 +1,9 @@
-[gd_scene load_steps=65 format=3 uid="uid://328a2rb4wto0"]
+[gd_scene load_steps=66 format=3 uid="uid://328a2rb4wto0"]
 
 [ext_resource type="SpriteFrames" uid="uid://dhq7vb7u7ki6l" path="res://addons/rubicon_mania/assets/ManiaDefault.tres" id="1_6gtoi"]
 [ext_resource type="Script" uid="uid://cl5ub8354p83i" path="res://addons/rubicon_mania/scripts/rubicon_level_mania_note_handler.gd" id="1_o0sw0"]
 [ext_resource type="AnimationLibrary" uid="uid://qv27r45s5r3p" path="res://addons/rubicon_mania/resources/skins/default/ManiaDefault.tres" id="2_v1has"]
+[ext_resource type="Resource" uid="uid://ndurlv0cfk5o" path="res://addons/rubicon_mania/resources/default_settings.tres" id="2_wdy23"]
 
 [sub_resource type="Animation" id="Animation_o0sw0"]
 length = 0.001
@@ -236,6 +237,57 @@ tracks/4/keys = {
 "values": [Vector2(0, -1), Vector2(0, -3)]
 }
 
+[sub_resource type="Animation" id="Animation_fy4se"]
+resource_name = "left_hit"
+length = 0.16667084
+step = 0.041666668
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hit/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("ArrowHit_Left"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hit:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(1.5, 4.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Outline:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hit:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_wdy23"]
 resource_name = "left_neutral"
 length = 0.041670833
@@ -358,8 +410,8 @@ tracks/4/keys = {
 "values": [Vector2(0, -1), Vector2(0, -3)]
 }
 
-[sub_resource type="Animation" id="Animation_fy4se"]
-resource_name = "left_hit"
+[sub_resource type="Animation" id="Animation_imikv"]
+resource_name = "right_hit"
 length = 0.16667084
 step = 0.041666668
 tracks/0/type = "animation"
@@ -369,7 +421,7 @@ tracks/0/path = NodePath("Hit/AnimationPlayer")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("ArrowHit_Left"),
+"clips": PackedStringArray("ArrowHit_Right"),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "value"
@@ -382,180 +434,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(1.5, 4.5)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Outline:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Hit:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_l377q"]
-resource_name = "up_neutral"
-length = 0.041670833
-step = 0.041666668
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Outline/AnimationPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("ArrowDef_Up_Outline"),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "animation"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Outline/Fill/AnimationPlayer")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"clips": PackedStringArray("ArrowFill_Up"),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Outline:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Hit:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Outline/Fill:offset")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -5)]
-}
-
-[sub_resource type="Animation" id="Animation_vtjqt"]
-resource_name = "up_press"
-length = 0.16667084
-step = 0.041666668
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Outline/Fill/AnimationPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("ArrowFill_Up"),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Outline:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "animation"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Outline/AnimationPlayer")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"clips": PackedStringArray("ArrowPush_Up_Outline"),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Hit:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Outline/Fill:offset")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.083333336),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2(0, -1), Vector2(0, -3)]
-}
-
-[sub_resource type="Animation" id="Animation_kvnwm"]
-resource_name = "up_hot"
-length = 0.16667084
-step = 0.041666668
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Hit/AnimationPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("ArrowHit_Up"),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Hit:offset")
-tracks/1/interp = 0
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(2, 5.5)]
+"values": [Vector2(1.5, 5.5)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -704,8 +583,8 @@ tracks/4/keys = {
 "values": [Vector2(0, -1), Vector2(0, -3)]
 }
 
-[sub_resource type="Animation" id="Animation_imikv"]
-resource_name = "right_hit"
+[sub_resource type="Animation" id="Animation_kvnwm"]
+resource_name = "up_hot"
 length = 0.16667084
 step = 0.041666668
 tracks/0/type = "animation"
@@ -715,7 +594,7 @@ tracks/0/path = NodePath("Hit/AnimationPlayer")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("ArrowHit_Right"),
+"clips": PackedStringArray("ArrowHit_Up"),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "value"
@@ -728,7 +607,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(1.5, 5.5)]
+"values": [Vector2(2, 5.5)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -753,6 +632,128 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_l377q"]
+resource_name = "up_neutral"
+length = 0.041670833
+step = 0.041666668
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Outline/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("ArrowDef_Up_Outline"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "animation"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Outline/Fill/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": PackedStringArray("ArrowFill_Up"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Outline:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hit:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Outline/Fill:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+
+[sub_resource type="Animation" id="Animation_vtjqt"]
+resource_name = "up_press"
+length = 0.16667084
+step = 0.041666668
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Outline/Fill/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("ArrowFill_Up"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Outline:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Outline/AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("ArrowPush_Up_Outline"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hit:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Outline/Fill:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, -1), Vector2(0, -3)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o0sw0"]
@@ -974,7 +975,7 @@ states/up/position = Vector2(463.8828, 207.5)
 transitions = ["Start", "RESET", SubResource("AnimationNodeStateMachineTransition_yxc8l"), "RESET", "left", SubResource("AnimationNodeStateMachineTransition_yrnou"), "RESET", "down", SubResource("AnimationNodeStateMachineTransition_2vnxt"), "RESET", "up", SubResource("AnimationNodeStateMachineTransition_fog6o"), "RESET", "right", SubResource("AnimationNodeStateMachineTransition_tvk2b"), "left", "RESET", SubResource("AnimationNodeStateMachineTransition_1gtrt"), "down", "RESET", SubResource("AnimationNodeStateMachineTransition_7oy66"), "up", "RESET", SubResource("AnimationNodeStateMachineTransition_hf36s"), "right", "RESET", SubResource("AnimationNodeStateMachineTransition_1gcdg")]
 graph_offset = Vector2(0, -12.712573)
 
-[node name="Lane" type="Control"]
+[node name="Lane" type="Control" node_paths=PackedStringArray("lane_animation_mixer")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -984,6 +985,8 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o0sw0")
+lane_animation_mixer = NodePath("AnimationTree")
+settings = ExtResource("2_wdy23")
 metadata/_custom_type_script = "uid://cl5ub8354p83i"
 
 [node name="Outline" type="AnimatedSprite2D" parent="."]
