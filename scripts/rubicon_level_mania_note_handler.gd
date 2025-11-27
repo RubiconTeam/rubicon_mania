@@ -19,7 +19,8 @@ func _init() -> void:
 func hit_note(index : int, time_when_hit : float, hit_type : RubiconLevelNoteHitResult.Hit) -> void:
 	super(index, time_when_hit, hit_type)
 
-	lane_state = LaneState.LANE_STATE_HIT
+	if results[index].scoring_rating < RubiconLevelNoteHitResult.Judgment.JUDGMENT_MISS and results[index].scoring_rating != RubiconLevelNoteHitResult.Judgment.JUDGMENT_NONE:
+		lane_state = LaneState.LANE_STATE_HIT
 
 	if hit_type == RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE:
 		results[index].scoring_value = 0.25
@@ -102,7 +103,7 @@ func _press(event : InputEvent) -> void:
 		lane_state = LaneState.LANE_STATE_PUSH
 
 func _release(event : InputEvent) -> void:
-	if results[note_hit_index] != null and results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE:
+	if note_hit_index < data.size() and results[note_hit_index] != null and results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE:
 		hit_note(note_hit_index, get_controller().get_level_clock().get_time_precise(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 		note_hit_index += 1
 
