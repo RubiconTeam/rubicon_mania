@@ -10,8 +10,9 @@ class_name RubiconLevelManiaNote extends RubiconLevelNote
 @export var offset_scale : Vector2 = Vector2.ONE
 
 @export_group("References", "reference_")
+@export var reference_graphic : Control
 @export var reference_trail : Control
-@export var reference_trail_mask : Control
+@export var reference_container : Control
 
 func get_mania_handler() -> RubiconLevelManiaNoteHandler:
 	return _handler
@@ -24,17 +25,18 @@ func initialize(handler : RubiconLevelNoteHandler, data_index : int) -> void:
 	var final_rotation : float = get_mania_handler().global_direction + local_direction
 	position = Vector2(cos(final_rotation), sin(final_rotation)) * 5000.0
 	
-	reference_trail_mask.offset_left = 0.0
-	reference_trail_mask.pivot_offset.x = -reference_trail_mask.offset_left
+	reference_container.offset_left = 0.0
+	reference_container.pivot_offset.x = -reference_container.offset_left
 	
-	reference_trail_mask.offset_right = floor(handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position())
+	reference_container.offset_right = floor(handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position())
 
 func _process(delta: float) -> void:
 	if not _should_process():
 		return
 	
 	var final_rotation : float = get_mania_handler().global_direction + local_direction
-	reference_trail_mask.rotation = final_rotation
+	reference_container.rotation = final_rotation
+	reference_graphic.rotation = -final_rotation
 	
 	var current_time : float = handler.get_controller().get_level_clock().time_milliseconds
 	var current_start_position : float = handler.data[data_index].get_graphical_start_position_relative(current_time)
@@ -43,17 +45,18 @@ func _process(delta: float) -> void:
 	var rotation_vector : Vector2 = Vector2(cos(final_rotation), sin(final_rotation))
 	position = (rotation_vector * current_start_position) + (rotation_vector * offset_position)
 	
-	if was_hit() and not was_missed():
-		reference_trail_mask.offset_left = floor(reference_trail_mask.offset_right - handler.data[data_index].get_graphical_end_position_relative(current_time))
-		reference_trail_mask.pivot_offset.x = -reference_trail_mask.offset_left
-	else:
-		reference_trail_mask.offset_left = 0.0
-		reference_trail_mask.pivot_offset.x = -reference_trail_mask.offset_left
+	if handler.data[data_index].ending_row != null:
+		if was_hit() and not was_missed():
+			reference_container.offset_left = floor(reference_container.offset_right - handler.data[data_index].get_graphical_end_position_relative(current_time))
+			reference_container.pivot_offset.x = -reference_container.offset_left
+		elif not was_hit():
+			reference_container.offset_left = 0.0
+			reference_container.pivot_offset.x = -reference_container.offset_left
 	# Trail
-	#var trail_size : Vector2 = reference_trail_mask.size
+	#var trail_size : Vector2 = reference_container.size
 	#trail_size.x = handler.data[data_index].get_graphical_end_position_relative(current_time) - current_start_position
-	#reference_trail_mask.size = trail_size
+	#reference_container.size = trail_size
 	#
-	#var trail_position : Vector2 = reference_trail_mask.position
+	#var trail_position : Vector2 = reference_container.position
 	#trail_position.x = reference_trail.size.x - trail_size.x
-	#reference_trail_mask.position = trail_position
+	#reference_container.position = trail_position
