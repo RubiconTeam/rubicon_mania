@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 	if not _should_process():
 		return
 	
-	if (get_controller().autoplay or (get_controller().preview_as_autoplay and Engine.is_editor_hint())) and note_hit_index > 0 and lane_state == LaneState.LANE_STATE_HIT and (results[note_hit_index - 1] == null or results[note_hit_index - 1].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_COMPLETE):
+	if get_controller().should_autoplay() and note_hit_index > 0 and lane_state == LaneState.LANE_STATE_HIT and (results[note_hit_index - 1] == null or results[note_hit_index - 1].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_COMPLETE):
 		lane_state = LaneState.LANE_STATE_NEUTRAL
 
 func _press(event : InputEvent) -> void:
