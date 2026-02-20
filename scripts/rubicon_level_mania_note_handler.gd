@@ -111,7 +111,7 @@ func _release(event : InputEvent) -> void:
 		lane_state = LaneState.LANE_STATE_NEUTRAL
 
 func _autoplay_process(millisecond_position : float) -> void:
-	while data[note_hit_index].get_millisecond_start_position() - millisecond_position <= 0:
+	while note_hit_index < data.size() and data[note_hit_index].get_millisecond_start_position() - millisecond_position <= 0:
 		# Hold note logic
 		if data[note_hit_index].ending_row != null:
 			if results[note_hit_index] == null or results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_NONE:
