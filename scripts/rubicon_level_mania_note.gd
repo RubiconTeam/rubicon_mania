@@ -28,18 +28,21 @@ func initialize(handler : RubiconLevelNoteHandler, data_index : int) -> void:
 	reference_container.offset_left = 0.0
 	reference_container.pivot_offset.x = -reference_container.offset_left
 	
-	reference_container.offset_right = floor(handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position())
+	reference_container.offset_right = floor(get_mania_handler().get_controller().chart.scroll_multiplier * (handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position()))
 
 func _process(delta: float) -> void:
 	if not _should_process():
 		return
 	
-	var final_rotation : float = get_mania_handler().global_direction + local_direction
+	var handler : RubiconLevelManiaNoteHandler = get_mania_handler()
+	var controller : RubiconLevelNoteController = handler.get_controller()
+	
+	var final_rotation : float = handler.global_direction + local_direction
 	reference_container.rotation = final_rotation
 	reference_graphic.rotation = -final_rotation
 	
-	var current_time : float = handler.get_controller().get_level_clock().time_milliseconds
-	var current_start_position : float = handler.data[data_index].get_graphical_start_position_relative(current_time)
+	var current_time : float = controller.get_level_clock().time_milliseconds
+	var current_start_position : float = controller.chart.scroll_multiplier * handler.data[data_index].get_graphical_start_position_relative(current_time)
 	
 	# Positioning
 	var rotation_vector : Vector2 = Vector2(cos(final_rotation), sin(final_rotation))
@@ -47,7 +50,7 @@ func _process(delta: float) -> void:
 	
 	if handler.data[data_index].ending_row != null:
 		if was_hit() and not was_missed():
-			reference_container.offset_left = floor(reference_container.offset_right - handler.data[data_index].get_graphical_end_position_relative(current_time))
+			reference_container.offset_left = floor(reference_container.offset_right - (controller.chart.scroll_multiplier * handler.data[data_index].get_graphical_end_position_relative(current_time)))
 			reference_container.pivot_offset.x = -reference_container.offset_left
 		elif not was_hit():
 			reference_container.offset_left = 0.0
