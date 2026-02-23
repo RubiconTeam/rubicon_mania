@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RubiconLevelNoteInputMap" load_steps=6 format=3 uid="uid://d3gd5egsmfwfp"]
+[gd_resource type="Resource" script_class="RubiconLevelNoteInputMap" format=3 uid="uid://d3gd5egsmfwfp"]
 
 [ext_resource type="Script" uid="uid://6r0nse0ex5v5" path="res://addons/rubicon/scripts/data/game/rubicon_level_note_input_map.gd" id="1_xpru3"]
 
