@@ -28,7 +28,8 @@ func initialize(handler : RubiconLevelNoteHandler, data_index : int) -> void:
 	reference_container.offset_left = 0.0
 	reference_container.pivot_offset.x = -reference_container.offset_left
 	
-	reference_container.offset_right = floor(get_mania_handler().get_controller().chart.scroll_multiplier * (handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position()))
+	var controller : RubiconLevelNoteController = get_mania_handler().get_controller()
+	reference_container.offset_right = floor(controller.chart.scroll_multiplier * controller.scroll_speed_multiplier * (handler.data[data_index].get_graphical_end_position() - handler.data[data_index].get_graphical_start_position()))
 
 func _process(delta: float) -> void:
 	if not _should_process():
@@ -42,7 +43,7 @@ func _process(delta: float) -> void:
 	reference_graphic.rotation = -final_rotation
 	
 	var current_time : float = controller.get_level_clock().time_milliseconds
-	var current_start_position : float = controller.chart.scroll_multiplier * handler.data[data_index].get_graphical_start_position_relative(current_time)
+	var current_start_position : float = controller.chart.scroll_multiplier * controller.scroll_speed_multiplier * handler.data[data_index].get_graphical_start_position_relative(current_time)
 	
 	# Positioning
 	var rotation_vector : Vector2 = Vector2(cos(final_rotation), sin(final_rotation))
@@ -50,7 +51,7 @@ func _process(delta: float) -> void:
 	
 	if handler.data[data_index].ending_row != null:
 		if was_hit() and not was_missed():
-			reference_container.offset_left = floor(reference_container.offset_right - (controller.chart.scroll_multiplier * handler.data[data_index].get_graphical_end_position_relative(current_time)))
+			reference_container.offset_left = floor(reference_container.offset_right - (controller.chart.scroll_multiplier * controller.scroll_speed_multiplier * handler.data[data_index].get_graphical_end_position_relative(current_time)))
 			reference_container.pivot_offset.x = -reference_container.offset_left
 		elif not was_hit():
 			reference_container.offset_left = 0.0
