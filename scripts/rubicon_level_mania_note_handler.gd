@@ -89,15 +89,18 @@ func _press(event : InputEvent) -> void:
 	while data[note_hit_index].get_millisecond_start_position() <= -settings.judgment_window_bad:
 		hit_note(note_hit_index, precise_time, RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 		note_hit_index += 1
+		get_controller().update_performance()
 
 		hit_time = data[note_hit_index].get_millisecond_start_position() - precise_time
 	
 	if absf(hit_time) <= settings.judgment_window_bad:
 		if data[note_hit_index].ending_row != null:
 			hit_note(note_hit_index, precise_time, RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE)
+			get_controller().update_performance()
 		else:
 			hit_note(note_hit_index, precise_time, RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 			note_hit_index += 1
+			get_controller().update_performance()
 		
 	else:
 		lane_state = LaneState.LANE_STATE_PUSH
@@ -106,6 +109,7 @@ func _release(event : InputEvent) -> void:
 	if note_hit_index < data.size() and results[note_hit_index] != null and results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE:
 		hit_note(note_hit_index, get_controller().get_level_clock().get_time_precise(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 		note_hit_index += 1
+		get_controller().update_performance()
 
 	if lane_state != LaneState.LANE_STATE_NEUTRAL:
 		lane_state = LaneState.LANE_STATE_NEUTRAL
@@ -116,11 +120,14 @@ func _autoplay_process(millisecond_position : float) -> void:
 		if data[note_hit_index].ending_row != null:
 			if results[note_hit_index] == null or results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_NONE:
 				hit_note(note_hit_index, data[note_hit_index].get_millisecond_start_position(), RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE)
+				get_controller().update_performance()
 			
 			break
 
 		hit_note(note_hit_index,data[note_hit_index].get_millisecond_end_position(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 		note_hit_index += 1
+		
+		get_controller().update_performance()
 
 func _property_get_revert(property : StringName) -> Variant:
 	if property == "settings" and ResourceLoader.exists("res://addons/rubicon_mania/resources/default_settings.tres"):
