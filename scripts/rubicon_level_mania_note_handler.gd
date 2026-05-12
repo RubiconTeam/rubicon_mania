@@ -7,7 +7,7 @@ enum LaneState {
 	LANE_STATE_HIT = 2
 }
 
-@export var global_direction : float = 0.0
+@export var global_direction : float = -1.571
 
 @export_group("Lane", "lane_")
 @export var lane_id : int = 0
