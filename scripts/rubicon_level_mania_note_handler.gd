@@ -80,39 +80,50 @@ func _process(delta: float) -> void:
 		lane_state = LaneState.LANE_STATE_NEUTRAL
 
 func _press(event : InputEvent) -> void:
+	var controller: RubiconLevelNoteController = get_controller()
 	if note_hit_index >= data.size():
 		lane_state = LaneState.LANE_STATE_PUSH
+
+		just_pressed.emit()
+		controller.handler_just_pressed.emit(get_unique_id())
 		return
 	
-	var precise_time : float = get_controller().get_level_clock().get_time_precise()
+	var precise_time : float = controller.get_level_clock().get_time_precise()
 	var hit_time : float = data[note_hit_index].get_millisecond_start_position() - precise_time
 	while data[note_hit_index].get_millisecond_start_position() <= -settings.judgment_window_bad:
 		hit_note(note_hit_index, precise_time, RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 		note_hit_index += 1
-		get_controller().update_performance()
+		controller.update_performance()
 
 		hit_time = data[note_hit_index].get_millisecond_start_position() - precise_time
 	
 	if absf(hit_time) <= settings.judgment_window_bad:
 		if data[note_hit_index].ending_row != null:
 			hit_note(note_hit_index, precise_time, RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE)
-			get_controller().update_performance()
+			controller.update_performance()
 		else:
 			hit_note(note_hit_index, precise_time, RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 			note_hit_index += 1
-			get_controller().update_performance()
+			controller.update_performance()
 		
 	else:
 		lane_state = LaneState.LANE_STATE_PUSH
 
+	just_pressed.emit()
+	controller.handler_just_pressed.emit(get_unique_id())
+
 func _release(event : InputEvent) -> void:
+	var controller: RubiconLevelNoteController = get_controller()
 	if note_hit_index < data.size() and results[note_hit_index] != null and results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE:
-		hit_note(note_hit_index, get_controller().get_level_clock().get_time_precise(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
+		hit_note(note_hit_index, controller.get_level_clock().get_time_precise(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 		note_hit_index += 1
-		get_controller().update_performance()
+		controller.update_performance()
 
 	if lane_state != LaneState.LANE_STATE_NEUTRAL:
 		lane_state = LaneState.LANE_STATE_NEUTRAL
+	
+	just_pressed.emit()
+	controller.handler_just_released.emit(get_unique_id())
 
 func _autoplay_process(millisecond_position : float) -> void:
 	while note_hit_index < data.size() and data[note_hit_index].get_millisecond_start_position() - millisecond_position <= 0:
