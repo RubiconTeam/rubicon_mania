@@ -88,7 +88,7 @@ func _press(event : InputEvent) -> void:
 		controller.handler_just_pressed.emit(get_unique_id())
 		return
 	
-	var precise_time : float = controller.get_level_clock().get_time_precise()
+	var precise_time : float = controller.get_level_clock().get_time_precise() + controller.offset_input
 	var hit_time : float = data[note_hit_index].get_millisecond_start_position() - precise_time
 	while data[note_hit_index].get_millisecond_start_position() <= -settings.judgment_window_bad:
 		hit_note(note_hit_index, precise_time, RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
@@ -115,7 +115,7 @@ func _press(event : InputEvent) -> void:
 func _release(event : InputEvent) -> void:
 	var controller: RubiconLevelNoteController = get_controller()
 	if note_hit_index < data.size() and results[note_hit_index] != null and results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE:
-		hit_note(note_hit_index, controller.get_level_clock().get_time_precise(), RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
+		hit_note(note_hit_index, controller.get_level_clock().get_time_precise() + controller.offset_input, RubiconLevelNoteHitResult.Hit.HIT_COMPLETE)
 		note_hit_index += 1
 		controller.update_performance()
 
