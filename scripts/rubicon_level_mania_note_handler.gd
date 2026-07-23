@@ -8,10 +8,13 @@ enum LaneState {
 }
 
 @export var global_direction : float = -1.571
+@export var allow_misplays: bool = true
 
 @export_group("Lane", "lane_")
 @export var lane_id : int = 0
 @export var lane_state : LaneState
+
+signal misplayed(lane_id: int)
 
 func _init() -> void:
 	settings = load("res://addons/rubicon_mania/resources/default_settings.tres")
@@ -108,6 +111,12 @@ func _press(event : InputEvent) -> void:
 		
 	else:
 		lane_state = LaneState.LANE_STATE_PUSH
+
+		if not allow_misplays:
+			if not break_combo_indexes.has(note_hit_index - 1):
+				break_combo_indexes.append(note_hit_index - 1)
+			
+			misplayed.emit(lane_id)
 
 	just_pressed.emit()
 	controller.handler_just_pressed.emit(get_unique_id())
