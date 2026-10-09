@@ -78,8 +78,14 @@ func _process(delta: float) -> void:
 	super(delta)
 	if not _should_process():
 		return
-	
-	if get_controller().should_autoplay() and note_hit_index > 0 and lane_state == LaneState.LANE_STATE_HIT and (results[note_hit_index - 1] == null or results[note_hit_index - 1].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_COMPLETE):
+
+	if not get_controller().should_autoplay() or lane_state != LaneState.LANE_STATE_HIT or note_hit_index <= 0:
+		return
+
+	if note_hit_index < results.size() and results[note_hit_index] != null and results[note_hit_index].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_INCOMPLETE:
+		return
+
+	if results[note_hit_index - 1] == null or (results[note_hit_index - 1].scoring_hit == RubiconLevelNoteHitResult.Hit.HIT_COMPLETE and get_controller().get_level_clock().time_milliseconds - data[note_hit_index - 1].get_millisecond_end_position() >= 150.0):
 		lane_state = LaneState.LANE_STATE_NEUTRAL
 
 func _press(event : InputEvent) -> void:
